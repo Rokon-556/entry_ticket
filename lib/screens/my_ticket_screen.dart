@@ -1,19 +1,43 @@
+import 'dart:developer';
+
+import 'package:entry_ticket/models/my_ticket_model.dart';
 import 'package:flutter/material.dart';
 
-class MyTicketScreen extends StatelessWidget {
-  const MyTicketScreen({super.key});
+import '../services/service.dart';
+
+class MyTicketScreen extends StatefulWidget {
+  final token;
+  const MyTicketScreen(this.token, {super.key});
+
+  @override
+  State<MyTicketScreen> createState() => _MyTicketScreenState();
+}
+
+class _MyTicketScreenState extends State<MyTicketScreen> {
+  List<MyItems> _myItem = [];
+
+  void _getMyAllData() async {
+    print('Get Init Data');
+    MyTicketModel ticketModel = (await ApiServiceData()
+        .getAllMyData('${widget.token}'))!;
+    //itemList.addAll(membermodel.items);
+    _myItem.addAll(ticketModel.items!);
+
+    log("response data:  ${ticketModel}");
+    log("response data:  ${ticketModel.items![0].pk}");
+
+    setState(() {});
+  }
+  @override
+  void initState() {
+    _getMyAllData();
+    print('helloo: $_getMyAllData');
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final List place = ['Uttara', 'Wari', 'Badda', 'Mirpur'];
-
-    String getPlace() {
-      for (var p in place) {
-        return p;
-      }
-      return getPlace();
-    }
-
     return Scaffold(
       //backgroundColor: Color(0xffefcbd8),
       appBar: AppBar(
@@ -104,11 +128,11 @@ class MyTicketScreen extends StatelessWidget {
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               Text(
-                                'Serial Number: 12322',
+                                'Serial Number: ${_myItem[0].pk}',
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
-                              const Text(
-                                'Quantity',
+                               Text(
+                                'Quantity: ${_myItem[0].qty}',
                                 style:
                                     TextStyle(fontSize: 14, color: Colors.red),
                               ),
@@ -129,30 +153,30 @@ class MyTicketScreen extends StatelessWidget {
                         ]),
                   ),
                 ),
-                Positioned(
-                  top: 10,
-                  bottom: 320,
-                  left: 5,
-                  right: 60,
-                  child: Container(
-                    height: 5,
-                    width: 5,
-                    decoration: const BoxDecoration(
-                        color: Colors.white, shape: BoxShape.circle),
-                  ),
-                ),
-                Positioned(
-                  left: 50,
-                  right: 110,
-                  top: 2,
-                  bottom: 120,
-                  child: Container(
-                    height: 5,
-                    width: 5,
-                    decoration: const BoxDecoration(
-                        color: Colors.white, shape: BoxShape.circle),
-                  ),
-                ),
+                // Positioned(
+                //   top: 10,
+                //   bottom: 320,
+                //   left: 5,
+                //   right: 60,
+                //   child: Container(
+                //     height: 5,
+                //     width: 5,
+                //     decoration: const BoxDecoration(
+                //         color: Color(0xfffbe5ae), shape: BoxShape.circle),
+                //   ),
+                // ),
+                // Positioned(
+                //   left: 50,
+                //   right: 110,
+                //   top: 2,
+                //   bottom: 120,
+                //   child: Container(
+                //     height: 5,
+                //     width: 5,
+                //     decoration: const BoxDecoration(
+                //         color: Color(0xfffbe5ae), shape: BoxShape.circle),
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -161,11 +185,10 @@ class MyTicketScreen extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: Container(
               color: Colors.white,
-              child: Row( children: [
-                //Divider(color: Theme.of(context).primaryColor,height: 3,),
-                Container(height: 3,width: 20,color: Colors.amber,),
+              child: Row( mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                
                 Column(
-                  //mainAxisAlignment: MainAxisAlignment.start,
+                  
                   children: [
                     normText('Order Id'),
                     colorText('45463', context),

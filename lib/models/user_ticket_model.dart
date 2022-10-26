@@ -3,17 +3,17 @@ import 'dart:convert';
 
 
 
-List<ListModel> memberModelFromJson(String str) =>
-    List<ListModel>.from(
-        json.decode(str).map((x) => ListModel.fromJson(x)));
+List<UserTicketModel> memberModelFromJson(String str) =>
+    List<UserTicketModel>.from(
+        json.decode(str).map((x) => UserTicketModel.fromJson(x)));
 
-String memberModelToJson(List<ListModel> data) =>
+String memberModelToJson(List<UserTicketModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 
 
 
-class ListModel {
+class UserTicketModel {
   
   List<Items>? items;
   bool? hasMore;
@@ -22,7 +22,7 @@ class ListModel {
   int? count;
   List<Links>? links;
 
-  ListModel(
+  UserTicketModel(
       {this.items,
       this.hasMore,
       this.limit,
@@ -33,7 +33,7 @@ class ListModel {
 
       
 
-  ListModel.fromJson(Map<String, dynamic> json) {
+  UserTicketModel.fromJson(Map<String, dynamic> json) {
     print("4--");
     if (json['items'] != null) {
       items = <Items>[];
