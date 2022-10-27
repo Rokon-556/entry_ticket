@@ -12,7 +12,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Items> _item = [];
+  final List<Items> _item = [];
 
   @override
   void initState() {
@@ -22,7 +22,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _getAllData() async {
-    print('Get Init Data');
     UserTicketModel memberModel = (await ApiServiceData().getAllDataFromApi())!;
 
     _item.addAll(memberModel.items!);
@@ -40,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text('TICKETS'),
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
-        leading: Icon(Icons.arrow_back),
+        leading: const Icon(Icons.arrow_back),
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
@@ -123,11 +122,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                     color: Theme.of(context).primaryColor),
                               ),
                               IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.arrow_circle_right,
-                                    color: Theme.of(context).primaryColor,
-                                  ))
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.arrow_circle_right,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
                             ],
                           )
                         ],

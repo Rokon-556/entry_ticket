@@ -14,13 +14,12 @@ class MyTicketScreen extends StatefulWidget {
 }
 
 class _MyTicketScreenState extends State<MyTicketScreen> {
-  List<MyItems> _myItem = [];
+  final List<MyItems> _myItem = [];
 
   void _getMyAllData() async {
-    print('Get Init Data');
-    MyTicketModel ticketModel = (await ApiServiceData()
-        .getAllMyData('${widget.token}'))!;
-    //itemList.addAll(membermodel.items);
+    MyTicketModel ticketModel =
+        (await ApiServiceData().getAllMyData('${widget.token}'))!;
+
     _myItem.addAll(ticketModel.items!);
 
     log("response data:  ${ticketModel}");
@@ -28,18 +27,17 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
 
     setState(() {});
   }
+
   @override
   void initState() {
     _getMyAllData();
-    print('helloo: $_getMyAllData');
-    // TODO: implement initState
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Color(0xffefcbd8),
       appBar: AppBar(
         title: Text(
           'MY TICKET',
@@ -58,9 +56,6 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
           },
         ),
       ),
-      //Color(0xffbf9c9c)
-      //Color(0xfff79999)
-      //fbe5ae
       body: Column(
         children: [
           Container(
@@ -75,7 +70,6 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
                   left: 20,
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.3,
-                    //color: Colors.red,
                     width: 300,
                     decoration: BoxDecoration(
                         border: Border.all(
@@ -107,7 +101,7 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
                           ),
                           Column(
                             children: [
-                              for (int i = 1; i <= 47; i++)
+                              for (int i = 1; i <= 48; i++)
                                 i.isEven
                                     ? Container(
                                         width: 4,
@@ -127,15 +121,17 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
                                 'Child Ticket',
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
-                              Text(
-                                'Serial Number: ${_myItem[0].pk}',
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                               Text(
-                                'Quantity: ${_myItem[0].qty}',
-                                style:
-                                    TextStyle(fontSize: 14, color: Colors.red),
-                              ),
+                              for (int i = 0; i < _myItem.length; i++)
+                                Text(
+                                  'Serial Number: ${_myItem[i].pk}',
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                              for (int i = 0; i < _myItem.length; i++)
+                                Text(
+                                  'Quantity: ${_myItem[i].qty}',
+                                  style: const TextStyle(
+                                      fontSize: 14, color: Colors.red),
+                                ),
                               Container(
                                 padding: const EdgeInsets.all(15),
                                 decoration: BoxDecoration(
@@ -153,30 +149,26 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
                         ]),
                   ),
                 ),
-                // Positioned(
-                //   top: 10,
-                //   bottom: 320,
-                //   left: 5,
-                //   right: 60,
-                //   child: Container(
-                //     height: 5,
-                //     width: 5,
-                //     decoration: const BoxDecoration(
-                //         color: Color(0xfffbe5ae), shape: BoxShape.circle),
-                //   ),
-                // ),
-                // Positioned(
-                //   left: 50,
-                //   right: 110,
-                //   top: 2,
-                //   bottom: 120,
-                //   child: Container(
-                //     height: 5,
-                //     width: 5,
-                //     decoration: const BoxDecoration(
-                //         color: Color(0xfffbe5ae), shape: BoxShape.circle),
-                //   ),
-                // ),
+                Positioned(
+                  top: 10,
+                  bottom: 300,
+                  left: -45,
+                  right: 10,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        color: Color(0xfffbe5ae), shape: BoxShape.circle),
+                  ),
+                ),
+                Positioned(
+                  left: 140,
+                  right: 200,
+                  top: 50,
+                  bottom: -30,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                        color: Color(0xfffbe5ae), shape: BoxShape.circle),
+                  ),
+                ),
               ],
             ),
           ),
@@ -185,26 +177,26 @@ class _MyTicketScreenState extends State<MyTicketScreen> {
             padding: const EdgeInsets.all(10.0),
             child: Container(
               color: Colors.white,
-              child: Row( mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                
-                Column(
-                  
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    normText('Order Id'),
-                    colorText('45463', context),
-                    normText('Ticket purchase date'),
-                    colorText('24th may 2022', context),
-                    normText('Ticket Expairy Date'),
-                    colorText('None', context),
-                    normText('Price'),
-                    colorText('0 tk', context),
-                  ],
-                ),
-                Image.asset(
-                  'assets/images/qr.png',
-                  fit: BoxFit.cover,
-                ),
-              ]),
+                    Column(
+                      children: [
+                        normText('Order Id'),
+                        colorText('45463', context),
+                        normText('Ticket purchase date'),
+                        colorText('24th may 2022', context),
+                        normText('Ticket Expairy Date'),
+                        colorText('None', context),
+                        normText('Price'),
+                        colorText('0 tk', context),
+                      ],
+                    ),
+                    Image.asset(
+                      'assets/images/qr.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ]),
             ),
           ))
         ],
